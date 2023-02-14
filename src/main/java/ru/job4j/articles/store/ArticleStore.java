@@ -16,7 +16,8 @@ import java.util.Properties;
 
 public class ArticleStore implements Store<Article>, AutoCloseable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ArticleStore.class.getSimpleName());
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(ArticleStore.class.getSimpleName());
 
     private final Properties properties;
 
@@ -45,7 +46,8 @@ public class ArticleStore implements Store<Article>, AutoCloseable {
     private void initScheme() {
         LOGGER.info("Инициализация таблицы статей");
         try (var statement = connection.createStatement()) {
-            var sql = Files.readString(Path.of("db/scripts", "articles.sql"));
+            var sql = Files
+                    .readString(Path.of("db/scripts", "articles.sql"));
             statement.execute(sql);
         } catch (Exception e) {
             LOGGER.error("Не удалось выполнить операцию: { }", e.getCause());
@@ -57,7 +59,8 @@ public class ArticleStore implements Store<Article>, AutoCloseable {
     public Article save(Article model) {
         LOGGER.info("Сохранение статьи");
         var sql = "insert into articles(text) values(?)";
-        try (var statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (var statement = connection
+                .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, model.getText());
             statement.executeUpdate();
             var key = statement.getGeneratedKeys();
