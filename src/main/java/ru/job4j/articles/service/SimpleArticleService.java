@@ -20,8 +20,8 @@ public class SimpleArticleService implements ArticleService {
     }
 
     @Override
-    public void generate(Store<Word> wordStore
-            , int count, Store<Article> articleStore) {
+    public void generate(Store<Word> wordStore,
+             int count, Store<Article> articleStore) {
         LOGGER.info("Генерация статей в количестве {}", count);
         var words = wordStore.findAll();
         IntStream.iterate(0, i -> i < count, i -> i + 1)
